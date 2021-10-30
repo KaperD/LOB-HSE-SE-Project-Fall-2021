@@ -3,7 +3,6 @@ package ru.hse.sport.football.player.dao
 import org.springframework.stereotype.Component
 import ru.hse.sport.football.player.model.Player
 import ru.hse.sport.football.player.model.PlayerDto
-import java.util.*
 import kotlin.collections.ArrayList
 
 @Component
@@ -29,16 +28,10 @@ class PlayerDao {
     }
 
     fun getById(id: Int): Player? {
-        return Player(
-                0,
-                "Danil",
-                "Russia",
-                "Goalkeeper",
-                190,
-                "Right",
-                1,
-                123
-        )
+        if (id < 0 || id >= playerList.size) {
+            return null
+        }
+        return playerList[id]
     }
 
     fun getAll(): List<Player> {
