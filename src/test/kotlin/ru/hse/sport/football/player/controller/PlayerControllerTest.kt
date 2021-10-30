@@ -63,6 +63,17 @@ class PlayerControllerTest {
         )
     }
 
+    @Test
+    fun `test getting player correct response`() {
+        val json = getResource("goalkeeper.json")
+        val goalkeeper = postPlayer(json, Player::class.java).body!!
+
+        val GETResponse = getPlayer(goalkeeper.id, Player::class.java)
+
+        assertEquals(HttpStatus.OK, GETResponse.statusCode)
+        assertEquals(goalkeeper, GETResponse.body!!)
+    }
+
     fun checkModelFitsDto(player: Player, playerDto: PlayerDto) {
         assertEquals(playerDto.name, player.name)
         assertEquals(playerDto.country, player.country)
@@ -83,6 +94,13 @@ class PlayerControllerTest {
         return template.postForEntity(
             "/football/player",
             HttpEntity(playerJson, headers),
+            clazz
+        )
+    }
+
+    fun <T> getPlayer(playerId: Int, clazz: Class<T>): ResponseEntity<T> {
+        return template.getForEntity(
+            "/football/player/$playerId",
             clazz
         )
     }
