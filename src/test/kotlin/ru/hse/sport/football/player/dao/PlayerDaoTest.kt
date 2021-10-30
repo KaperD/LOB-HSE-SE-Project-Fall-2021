@@ -23,6 +23,16 @@ class PlayerDaoTest {
         123
     )
 
+    val forwardDto = PlayerDto(
+        "Alex",
+        "Canada",
+        "Center forward",
+        191,
+        "Left",
+        11,
+        0
+    )
+
     @Test
     fun `test save player`() {
         val player: Player = playerDao.save(goalkeeperDto)
@@ -40,11 +50,28 @@ class PlayerDaoTest {
     }
 
     @Test
+    fun `test save players unique ids`() {
+        val player1 = playerDao.save(goalkeeperDto)
+        val player2 = playerDao.save(forwardDto)
+        assertNotEquals(player1.id, player2.id)
+    }
+
+    @Test
     fun `test get player`() {
         val player: Player = playerDao.save(goalkeeperDto)
         val gottenPlayer: Player? = playerDao.getById(player.id)
         assertNotNull(gottenPlayer)
         assertEquals(player, gottenPlayer)
+    }
+
+    @Test
+    fun `test get multiple players`() {
+        for (i in 0..10) {
+            val player: Player = playerDao.save(goalkeeperDto)
+            val gottenPlayer: Player? = playerDao.getById(player.id)
+            assertNotNull(gottenPlayer)
+            assertEquals(player, gottenPlayer)
+        }
     }
 
     @Test
