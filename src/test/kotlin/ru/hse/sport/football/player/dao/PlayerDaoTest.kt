@@ -13,6 +13,16 @@ class PlayerDaoTest {
     @Autowired
     lateinit var playerDao: PlayerDao
 
+    val goalkeeperDto = PlayerDto(
+        "Danil",
+        "Russia",
+        "Goalkeeper",
+        190,
+        "Right",
+        1,
+        123
+    )
+
     @Test
     fun `test save user`() {
         val playerDto = PlayerDto(
@@ -24,7 +34,7 @@ class PlayerDaoTest {
             1,
             123
         )
-        val player: Player = playerDao.save(playerDto)
+        val player: Player = playerDao.save(goalkeeperDto)
         val expectedPlayer = Player(
             player.id,
             playerDto.name,
@@ -36,5 +46,12 @@ class PlayerDaoTest {
             playerDto.saves
         )
         assertEquals(expectedPlayer, player)
+    }
+
+    @Test
+    fun `test get user`() {
+        val player: Player = playerDao.save(goalkeeperDto)
+        val gottenPlayer: Player = playerDao.getById(player.id).get()
+        assertEquals(player, gottenPlayer)
     }
 }
