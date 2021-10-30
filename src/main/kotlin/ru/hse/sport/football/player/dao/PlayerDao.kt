@@ -12,7 +12,7 @@ class PlayerDao {
 
     fun getNumberOfPlayers() = playerList.size
 
-    fun save(playerDto: PlayerDto) : Player {
+    fun save(playerDto: PlayerDto): Player {
         playerList.add(
             Player(
                 playerList.size,
@@ -40,5 +40,9 @@ class PlayerDao {
                 1,
                 123
         ))
+    }
+
+    fun getAll(): List<Player> {
+        return playerList
     }
 }
