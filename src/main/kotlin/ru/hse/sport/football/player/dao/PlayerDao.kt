@@ -28,9 +28,8 @@ class PlayerDao {
         return playerList.last()
     }
 
-    fun getById(id: Int): Optional<Player> {
-        return Optional.of(
-            Player(
+    fun getById(id: Int): Player? {
+        return Player(
                 0,
                 "Danil",
                 "Russia",
@@ -39,7 +38,7 @@ class PlayerDao {
                 "Right",
                 1,
                 123
-        ))
+        )
     }
 
     fun getAll(): List<Player> {

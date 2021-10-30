@@ -42,7 +42,8 @@ class PlayerDaoTest {
     @Test
     fun `test get player`() {
         val player: Player = playerDao.save(goalkeeperDto)
-        val gottenPlayer: Player = playerDao.getById(player.id).get()
+        val gottenPlayer: Player? = playerDao.getById(player.id)
+        assertNotNull(gottenPlayer)
         assertEquals(player, gottenPlayer)
     }
 
