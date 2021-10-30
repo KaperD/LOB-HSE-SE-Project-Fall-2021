@@ -17,19 +17,9 @@ class PlayerController(
 ) {
 
     @PostMapping
-    fun addNewPlayer(@Validated @RequestBody playerRequest: PlayerPostRequest): ResponseEntity<Player> {
+    fun addNewPlayer(@Validated @RequestBody playerDto: PlayerDto): ResponseEntity<Player> {
         return ResponseEntity.ok(
-            playerService.createPlayer(
-                PlayerDto(
-                    playerRequest.name,
-                    playerRequest.country,
-                    playerRequest.position,
-                    playerRequest.height,
-                    playerRequest.leadingFoot.toString(),
-                    playerRequest.goals,
-                    playerRequest.saves
-                )
-            )
+            playerService.createPlayer(playerDto)
         )
     }
 }

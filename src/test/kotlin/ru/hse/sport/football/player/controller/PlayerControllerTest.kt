@@ -68,7 +68,7 @@ class PlayerControllerTest {
         assertEquals(playerDto.country, player.country)
         assertEquals(playerDto.position, player.position)
         assertEquals(playerDto.height, player.height)
-        assertEquals(playerDto.leadingFoot.uppercase(), player.leadingFoot)
+        assertEquals(playerDto.leadingFoot, player.leadingFoot)
         assertEquals(playerDto.goals, player.goals)
         assertEquals(playerDto.saves, player.saves)
     }
