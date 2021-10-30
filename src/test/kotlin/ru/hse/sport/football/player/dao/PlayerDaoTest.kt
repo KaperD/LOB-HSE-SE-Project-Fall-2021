@@ -25,25 +25,16 @@ class PlayerDaoTest {
 
     @Test
     fun `test save player`() {
-        val playerDto = PlayerDto(
-            "Danil",
-            "Russia",
-            "Goalkeeper",
-            190,
-            "Right",
-            1,
-            123
-        )
         val player: Player = playerDao.save(goalkeeperDto)
         val expectedPlayer = Player(
             player.id,
-            playerDto.name,
-            playerDto.country,
-            playerDto.position,
-            playerDto.height,
-            playerDto.leadingFoot,
-            playerDto.goals,
-            playerDto.saves
+            goalkeeperDto.name,
+            goalkeeperDto.country,
+            goalkeeperDto.position,
+            goalkeeperDto.height,
+            goalkeeperDto.leadingFoot,
+            goalkeeperDto.goals,
+            goalkeeperDto.saves
         )
         assertEquals(expectedPlayer, player)
     }
