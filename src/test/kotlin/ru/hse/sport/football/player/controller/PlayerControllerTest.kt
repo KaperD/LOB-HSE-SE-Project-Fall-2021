@@ -1,11 +1,14 @@
 package ru.hse.sport.football.player.controller
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.*
+import ru.hse.sport.football.player.model.Player
+import ru.hse.sport.football.player.model.PlayerDto
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PlayerControllerTest {
@@ -19,21 +22,49 @@ class PlayerControllerTest {
         val forward = getResource("forward.json")
         assertEquals(
             HttpStatus.OK,
-            postPlayer(forward).statusCode
+            postPlayer(forward, String::class.java).statusCode
         )
+    }
+
+    @Test
+    fun `test correct response after adding correct player`() {
+        val forwardJson = getResource("forward.json")
+        val goalkeeperJson = getResource("goalkeeper.json")
+
+        val forward = postPlayer(forwardJson, Player::class.java).body!!
+        val goalkeeper = postPlayer(goalkeeperJson, Player::class.java).body!!
+
+        assertNotEquals(forward.id, goalkeeper.id)
+
+        val mapper = ObjectMapper()
+        val forwardDto = mapper.readValue(forwardJson, PlayerDto::class.java)
+        val goalkeeperDto = mapper.readValue(goalkeeperJson, PlayerDto::class.java)
+
+        checkModelFitsDto(forward, forwardDto)
+        checkModelFitsDto(goalkeeper, goalkeeperDto)
+    }
+
+    fun checkModelFitsDto(player: Player, playerDto: PlayerDto) {
+        assertEquals(playerDto.name, player.name)
+        assertEquals(playerDto.country, player.country)
+        assertEquals(playerDto.position, player.position)
+        assertEquals(playerDto.height, player.height)
+        assertEquals(playerDto.leadingFoot, player.leadingFoot)
+        assertEquals(playerDto.goals, player.goals)
+        assertEquals(playerDto.saves, player.saves)
     }
 
     fun getResource(path: String): String {
         return this::class.java.getResource(path)!!.readText()
     }
 
-    fun postPlayer(playerJson: String): ResponseEntity<String> {
+    fun <T> postPlayer(playerJson: String, clazz: Class<T>): ResponseEntity<T> {
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
         return template.postForEntity(
             "/football/player",
             HttpEntity(playerJson, headers),
-            String::class.java
+            clazz
         )
     }
 }
