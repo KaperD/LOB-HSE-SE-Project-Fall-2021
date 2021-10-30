@@ -1,6 +1,6 @@
 package ru.hse.sport.football.player.controller
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -36,7 +36,7 @@ class PlayerControllerTest {
 
         assertNotEquals(forward.id, goalkeeper.id)
 
-        val mapper = ObjectMapper()
+        val mapper = jacksonObjectMapper()
         val forwardDto = mapper.readValue(forwardJson, PlayerDto::class.java)
         val goalkeeperDto = mapper.readValue(goalkeeperJson, PlayerDto::class.java)
 
@@ -44,12 +44,31 @@ class PlayerControllerTest {
         checkModelFitsDto(goalkeeper, goalkeeperDto)
     }
 
+    @Test
+    fun `test adding incorrect player`() {
+        val negativeHeight = getResource("negative_height.json")
+        val negativeGoals = getResource("negative_goals.json")
+        val noName = getResource("no_name.json")
+        assertEquals(
+            HttpStatus.BAD_REQUEST,
+            postPlayer(negativeHeight, Player::class.java).statusCode
+        )
+        assertEquals(
+            HttpStatus.BAD_REQUEST,
+            postPlayer(negativeGoals, Player::class.java).statusCode
+        )
+        assertEquals(
+            HttpStatus.BAD_REQUEST,
+            postPlayer(noName, Player::class.java).statusCode
+        )
+    }
+
     fun checkModelFitsDto(player: Player, playerDto: PlayerDto) {
         assertEquals(playerDto.name, player.name)
         assertEquals(playerDto.country, player.country)
         assertEquals(playerDto.position, player.position)
         assertEquals(playerDto.height, player.height)
-        assertEquals(playerDto.leadingFoot, player.leadingFoot)
+        assertEquals(playerDto.leadingFoot.uppercase(), player.leadingFoot)
         assertEquals(playerDto.goals, player.goals)
         assertEquals(playerDto.saves, player.saves)
     }
