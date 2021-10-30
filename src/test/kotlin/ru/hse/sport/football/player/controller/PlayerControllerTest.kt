@@ -51,15 +51,15 @@ class PlayerControllerTest {
         val noName = getResource("no_name.json")
         assertEquals(
             HttpStatus.BAD_REQUEST,
-            postPlayer(negativeHeight, Player::class.java).statusCode
+            postPlayer(negativeHeight, String::class.java).statusCode
         )
         assertEquals(
             HttpStatus.BAD_REQUEST,
-            postPlayer(negativeGoals, Player::class.java).statusCode
+            postPlayer(negativeGoals, String::class.java).statusCode
         )
         assertEquals(
             HttpStatus.BAD_REQUEST,
-            postPlayer(noName, Player::class.java).statusCode
+            postPlayer(noName, String::class.java).statusCode
         )
     }
 
