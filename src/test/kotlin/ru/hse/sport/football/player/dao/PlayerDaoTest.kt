@@ -24,7 +24,7 @@ class PlayerDaoTest {
     )
 
     @Test
-    fun `test save user`() {
+    fun `test save player`() {
         val playerDto = PlayerDto(
             "Danil",
             "Russia",
@@ -49,9 +49,19 @@ class PlayerDaoTest {
     }
 
     @Test
-    fun `test get user`() {
+    fun `test get player`() {
         val player: Player = playerDao.save(goalkeeperDto)
         val gottenPlayer: Player = playerDao.getById(player.id).get()
         assertEquals(player, gottenPlayer)
+    }
+
+    @Test
+    fun `test get all players`() {
+        val numberOfPlayers = playerDao.getNumberOfPlayers()
+        val player: Player = playerDao.save(goalkeeperDto)
+        val gottenPlayers: List<Player> = playerDao.getAll()
+
+        assertEquals(numberOfPlayers + 1, gottenPlayers.size)
+        assertEquals(player, gottenPlayers.last())
     }
 }
