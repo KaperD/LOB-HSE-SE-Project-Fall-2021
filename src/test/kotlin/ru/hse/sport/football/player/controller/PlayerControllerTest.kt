@@ -74,6 +74,13 @@ class PlayerControllerTest {
         assertEquals(goalkeeper, GETResponse.body!!)
     }
 
+    @Test
+    fun `test getting player with wrong id`() {
+        val response = getPlayer(-1, String::class.java)
+
+        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+    }
+
     fun checkModelFitsDto(player: Player, playerDto: PlayerDto) {
         assertEquals(playerDto.name, player.name)
         assertEquals(playerDto.country, player.country)
