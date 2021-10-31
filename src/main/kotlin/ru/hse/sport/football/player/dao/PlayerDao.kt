@@ -7,7 +7,7 @@ import kotlin.collections.ArrayList
 
 @Component
 class PlayerDao {
-    private val playerList : ArrayList<Player> = arrayListOf()
+    private val playerList: ArrayList<Player> = arrayListOf()
 
     fun getNumberOfPlayers() = playerList.size
 

@@ -9,6 +9,7 @@ import ru.hse.sport.football.player.model.PlayerDto
 class PlayerService(
     private val playerDao: PlayerDao
 ) {
+
     fun createPlayer(playerDto: PlayerDto): Player {
         return playerDao.save(playerDto)
     }

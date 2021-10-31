@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SportPlusApplication
 
 fun main(args: Array<String>) {
-    runApplication<SportPlusApplication>(*args)
+    runApplication<SportPlusApplication>(args = args)
 }

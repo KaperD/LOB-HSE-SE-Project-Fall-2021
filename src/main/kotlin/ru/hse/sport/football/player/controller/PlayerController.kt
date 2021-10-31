@@ -32,8 +32,10 @@ class PlayerController(
     }
 
     @PutMapping("/{id}")
-    fun updatePlayer(@PathVariable id: Int,
-                     @Validated @RequestBody updatedPlayerDto: PlayerDto): Player {
+    fun updatePlayer(
+        @PathVariable id: Int,
+        @Validated @RequestBody updatedPlayerDto: PlayerDto
+    ): Player {
         return playerService.updatePlayer(id, updatedPlayerDto) ?: throw PlayerNotFoundException(id)
     }
 }

@@ -66,6 +66,7 @@ class PlayerDaoTest {
     }
 
     @Test
+    @SuppressWarnings("UnusedPrivateMember")
     fun `test get multiple players`() {
         for (i in 0..10) {
             val player: Player = playerDao.save(goalkeeperDto)
