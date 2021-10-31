@@ -30,4 +30,10 @@ class PlayerController(
     fun getPlayer(): ResponseEntity<List<Player>> {
         return ResponseEntity.ok(playerService.getAllPlayers())
     }
+
+    @PutMapping("/{id}")
+    fun updatePlayer(@PathVariable id: Int,
+                     @Validated @RequestBody updatedPlayerDto: PlayerDto): ResponseEntity<Player> {
+        return ResponseEntity.ok(playerService.updatePlayer(id, updatedPlayerDto))
+    }
 }

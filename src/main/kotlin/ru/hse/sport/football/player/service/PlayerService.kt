@@ -18,4 +18,8 @@ class PlayerService(
     }
 
     fun getAllPlayers(): List<Player> = playerDao.getAll()
+
+    fun updatePlayer(id: Int, updatedPlayerDto: PlayerDto): Player? {
+        return playerDao.update(id, updatedPlayerDto)
+    }
 }
