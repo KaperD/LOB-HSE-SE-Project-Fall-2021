@@ -19,17 +19,19 @@ jobs:
         run: ./gradlew test
       - name: Check test coverage with Gradle
         run: ./gradlew jacocoTestCoverageVerification
-      - name: Upload the linter report
+      - name: Create a test coverage report
+        run: ./gradlew jacocoTestReport
+      - name: Upload a linter report
         uses: actions/upload-artifact@v2
         with:
           name: linter-report
           path: build/reports/detekt
-      - name: Upload the test report
+      - name: Upload a test report
         uses: actions/upload-artifact@v2
         with:
           name: test-report
           path: build/reports/tests/test
-      - name: Upload the test coverage report
+      - name: Upload a test coverage report
         uses: actions/upload-artifact@v2
         with:
           name: jacoco-html-report
