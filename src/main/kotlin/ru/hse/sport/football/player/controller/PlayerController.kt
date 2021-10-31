@@ -3,6 +3,7 @@ package ru.hse.sport.football.player.controller
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import ru.hse.sport.football.player.exception.PlayerNotFoundException
 import ru.hse.sport.football.player.model.Player
 import ru.hse.sport.football.player.model.PlayerDto
 import ru.hse.sport.football.player.service.PlayerService
@@ -22,6 +23,6 @@ class PlayerController(
 
     @GetMapping("/{id}")
     fun getPlayer(@PathVariable id: Int): Player {
-        return playerService.getPlayer(id)!!
+        return playerService.getPlayer(id) ?: throw PlayerNotFoundException(id)
     }
 }

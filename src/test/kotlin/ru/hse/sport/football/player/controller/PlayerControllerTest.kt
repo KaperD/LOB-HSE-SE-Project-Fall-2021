@@ -1,6 +1,8 @@
 package ru.hse.sport.football.player.controller
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -81,6 +83,31 @@ class PlayerControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
     }
 
+    @Test
+    fun `test getting all players`() {
+        val responseBefore = getAllPlayers(String::class.java)
+        assertEquals(HttpStatus.OK, responseBefore.statusCode)
+        val allPlayersBefore = Json.parseToJsonElement(responseBefore.body!!)
+
+        val forwardJson = getResource("forward.json")
+        val goalkeeperJson = getResource("goalkeeper.json")
+
+        val goalkeeper = postPlayer(goalkeeperJson, Player::class.java).body!!
+        val forward = postPlayer(forwardJson, Player::class.java).body!!
+
+        val responseAfter = getAllPlayers(String::class.java)
+        assertEquals(HttpStatus.OK, responseAfter.statusCode)
+        val allPlayersAfter = Json.parseToJsonElement(responseAfter.body!!)
+
+        assertEquals(allPlayersBefore.jsonArray.size, allPlayersAfter.jsonArray.size - 2)
+        val numberOfPlayers = allPlayersAfter.jsonArray.size
+
+        val mapper = jacksonObjectMapper()
+
+        assertEquals(goalkeeper, mapper.readValue(allPlayersAfter.jsonArray[numberOfPlayers - 2].toString(), Player::class.java))
+        assertEquals(forward, mapper.readValue(allPlayersAfter.jsonArray[numberOfPlayers - 1].toString(), Player::class.java))
+    }
+
     fun checkModelFitsDto(player: Player, playerDto: PlayerDto) {
         assertEquals(playerDto.name, player.name)
         assertEquals(playerDto.country, player.country)
@@ -108,6 +135,13 @@ class PlayerControllerTest {
     fun <T> getPlayer(playerId: Int, clazz: Class<T>): ResponseEntity<T> {
         return template.getForEntity(
             "/football/player/$playerId",
+            clazz
+        )
+    }
+
+    fun <T> getAllPlayers(clazz: Class<T>): ResponseEntity<T> {
+        return template.getForEntity(
+            "/football/player/all",
             clazz
         )
     }
