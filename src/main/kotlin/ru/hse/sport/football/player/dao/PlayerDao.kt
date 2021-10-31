@@ -34,6 +34,21 @@ class PlayerDao {
         return playerList[id]
     }
 
+    fun update(id: Int, playerDto: PlayerDto): Player? {
+        val newPlayer = Player(
+            id,
+            playerDto.name,
+            playerDto.country,
+            playerDto.position,
+            playerDto.height,
+            playerDto.leadingFoot,
+            playerDto.goals,
+            playerDto.saves
+        )
+        playerList[id] = newPlayer
+        return newPlayer
+    }
+
     fun getAll(): List<Player> {
         return playerList
     }

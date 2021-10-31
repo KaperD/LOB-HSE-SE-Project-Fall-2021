@@ -104,4 +104,10 @@ class PlayerDaoTest {
         checkModelFitsDto(updatedForward, updatedForwardDto)
         checkModelFitsDto(playerDao.getById(forward.id)!!, updatedForwardDto)
     }
+
+    @Test
+    fun `test update player with wrong id`() {
+        assertNull(playerDao.update(-1, goalkeeperDto))
+        assertNull(playerDao.update(playerDao.getAll().size, goalkeeperDto))
+    }
 }
