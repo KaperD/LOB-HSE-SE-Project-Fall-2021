@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.*
+import org.springframework.web.util.UriComponentsBuilder
 import ru.hse.sport.football.player.checkModelFitsDto
 import ru.hse.sport.football.player.model.Player
 import ru.hse.sport.football.player.model.PlayerDto
@@ -108,6 +109,19 @@ class PlayerControllerTest {
         assertEquals(forward, mapper.readValue(allPlayersAfter[numberOfPlayers - 1].toString(), Player::class.java))
     }
 
+    @Test
+    fun `test updating player`() {
+        val forwardJson = getResource("forward.json")
+        val goalkeeperJson = getResource("goalkeeper.json")
+
+        val forward = postPlayer(forwardJson, Player::class.java).body!!
+        val goalkeeper1 = putPlayer(forward.id, goalkeeperJson, Player::class.java).body!!
+        val goalkeeper2 = getPlayer(forward.id, Player::class.java).body!!
+
+        assertEquals(goalkeeper1, goalkeeper2)
+        assertNotEquals(forward, goalkeeper2)
+    }
+
     fun getResource(path: String): String {
         return this::class.java.getResource(path)!!.readText()
     }
@@ -132,6 +146,17 @@ class PlayerControllerTest {
     fun <T> getAllPlayers(clazz: Class<T>): ResponseEntity<T> {
         return template.getForEntity(
             "/football/player/all",
+            clazz
+        )
+    }
+
+    fun <T> putPlayer(id: Int, playerJson: String, clazz: Class<T>): ResponseEntity<T> {
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_JSON
+        return template.exchange(
+            "/football/player/$id",
+            HttpMethod.PUT,
+            HttpEntity(playerJson, headers),
             clazz
         )
     }

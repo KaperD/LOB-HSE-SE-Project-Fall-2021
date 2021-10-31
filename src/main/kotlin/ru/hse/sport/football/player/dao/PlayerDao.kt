@@ -35,6 +35,9 @@ class PlayerDao {
     }
 
     fun update(id: Int, playerDto: PlayerDto): Player? {
+        if (id < 0 || id >= playerList.size) {
+            return null
+        }
         val newPlayer = Player(
             id,
             playerDto.name,
