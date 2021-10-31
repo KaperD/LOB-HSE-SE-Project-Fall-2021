@@ -11,6 +11,8 @@ jobs:
           java-version: '11'
       - name: Check out repository code
         uses: actions/checkout@v2
+      - name: Check style
+        run: ./gradlew detekt
       - name: Build with Gradle
         run: ./gradlew build
       - name: Test with Gradle
