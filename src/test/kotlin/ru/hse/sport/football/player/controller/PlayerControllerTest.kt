@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.*
-import org.springframework.web.util.UriComponentsBuilder
 import ru.hse.sport.football.player.checkModelFitsDto
 import ru.hse.sport.football.player.model.Player
 import ru.hse.sport.football.player.model.PlayerDto
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PlayerControllerTest {
-    val playerFields = arrayOf("name", "country", "position", "height", "leadingFoot", "goals", "saves")
 
     @Autowired
     lateinit var template: TestRestTemplate
@@ -120,6 +118,23 @@ class PlayerControllerTest {
 
         assertEquals(goalkeeper1, goalkeeper2)
         assertNotEquals(forward, goalkeeper2)
+    }
+
+    @Test
+    fun `test updating non-existing player`() {
+        val forwardJson = getResource("forward.json")
+        val goalkeeperJson = getResource("goalkeeper.json")
+        postPlayer(forwardJson, Player::class.java)
+        postPlayer(goalkeeperJson, Player::class.java)
+
+        val mapper = jacksonObjectMapper()
+
+        val allPlayersBefore = mapper.readTree(getAllPlayers(String::class.java).body!!)
+        val response = putPlayer(-1, forwardJson, String::class.java)
+        val allPlayersAfter = mapper.readTree(getAllPlayers(String::class.java).body!!)
+
+        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+        assertEquals(allPlayersBefore, allPlayersAfter)
     }
 
     fun getResource(path: String): String {
