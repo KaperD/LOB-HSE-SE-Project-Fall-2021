@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.*
+import ru.hse.sport.football.player.checkModelFitsDto
 import ru.hse.sport.football.player.model.Player
 import ru.hse.sport.football.player.model.PlayerDto
 
@@ -106,16 +107,6 @@ class PlayerControllerTest {
 
         assertEquals(goalkeeper, mapper.readValue(allPlayersAfter.jsonArray[numberOfPlayers - 2].toString(), Player::class.java))
         assertEquals(forward, mapper.readValue(allPlayersAfter.jsonArray[numberOfPlayers - 1].toString(), Player::class.java))
-    }
-
-    fun checkModelFitsDto(player: Player, playerDto: PlayerDto) {
-        assertEquals(playerDto.name, player.name)
-        assertEquals(playerDto.country, player.country)
-        assertEquals(playerDto.position, player.position)
-        assertEquals(playerDto.height, player.height)
-        assertEquals(playerDto.leadingFoot, player.leadingFoot)
-        assertEquals(playerDto.goals, player.goals)
-        assertEquals(playerDto.saves, player.saves)
     }
 
     fun getResource(path: String): String {

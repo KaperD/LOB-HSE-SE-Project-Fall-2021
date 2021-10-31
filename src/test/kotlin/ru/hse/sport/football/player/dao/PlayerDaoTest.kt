@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import ru.hse.sport.football.player.checkModelFitsDto
 import ru.hse.sport.football.player.model.Player
 import ru.hse.sport.football.player.model.PlayerDto
 
@@ -82,5 +83,25 @@ class PlayerDaoTest {
 
         assertEquals(numberOfPlayers + 1, gottenPlayers.size)
         assertEquals(player, gottenPlayers.last())
+    }
+
+    @Test
+    fun `test update player`() {
+        val forward = playerDao.save(forwardDto)
+        val newPosition = "programmer"
+
+        val updatedForwardDto = PlayerDto(
+            forwardDto.name,
+            forwardDto.country,
+            newPosition,
+            forwardDto.height,
+            forwardDto.leadingFoot,
+            forwardDto.goals,
+            forwardDto.saves
+        )
+
+        val updatedForward = playerDao.update(forward.id, updatedForwardDto)!!
+        checkModelFitsDto(updatedForward, updatedForwardDto)
+        checkModelFitsDto(playerDao.getById(forward.id)!!, updatedForwardDto)
     }
 }
