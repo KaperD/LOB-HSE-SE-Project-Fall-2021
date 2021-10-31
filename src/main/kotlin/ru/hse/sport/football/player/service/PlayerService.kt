@@ -16,4 +16,6 @@ class PlayerService(
     fun getPlayer(id: Int): Player? {
         return playerDao.getById(id)
     }
+
+    fun getAllPlayers(): List<Player> = playerDao.getAll()
 }

@@ -25,4 +25,9 @@ class PlayerController(
     fun getPlayer(@PathVariable id: Int): Player {
         return playerService.getPlayer(id) ?: throw PlayerNotFoundException(id)
     }
+
+    @GetMapping("/all")
+    fun getPlayer(): ResponseEntity<List<Player>> {
+        return ResponseEntity.ok(playerService.getAllPlayers())
+    }
 }
