@@ -27,13 +27,13 @@ class PlayerController(
     }
 
     @GetMapping("/all")
-    fun getPlayer(): ResponseEntity<List<Player>> {
-        return ResponseEntity.ok(playerService.getAllPlayers())
+    fun getPlayer(): List<Player> {
+        return playerService.getAllPlayers()
     }
 
     @PutMapping("/{id}")
     fun updatePlayer(@PathVariable id: Int,
-                     @Validated @RequestBody updatedPlayerDto: PlayerDto): ResponseEntity<Player> {
-        return ResponseEntity.ok(playerService.updatePlayer(id, updatedPlayerDto))
+                     @Validated @RequestBody updatedPlayerDto: PlayerDto): Player {
+        return playerService.updatePlayer(id, updatedPlayerDto) ?: throw PlayerNotFoundException(id)
     }
 }
