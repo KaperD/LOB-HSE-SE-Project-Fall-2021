@@ -30,7 +30,7 @@ jobs:
           name: test-report
           path: build/reports/tests/test
       - name: Upload the test coverage report
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: jacoco-html-report
           path: build/jacocoHtml
