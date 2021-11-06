@@ -6,6 +6,8 @@ This project is a backend for Sport+ service ([learn more](https://docs.google.c
 
 It provides REST API for making requests
 
+NB: project is in Incubating status, it means that public API can be changed
+
 ## Running localy
 
 Project uses Gradle build system
