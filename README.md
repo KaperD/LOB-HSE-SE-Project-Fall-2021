@@ -30,5 +30,5 @@ Ilya Onoffriychuk ([GitHub profile](https://github.com/ilyaonoff))
 
 Danil Bubnov ([GitHub profile](https://github.com/KaperD))
 
-## Licence
+## License
 Distributed under the [MIT license](https://choosealicense.com/licenses/mit/)
