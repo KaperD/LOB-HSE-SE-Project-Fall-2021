@@ -14,26 +14,20 @@ class TeamController(
     private val teamService: TeamService
 ) {
     @PostMapping
-    fun createTeam(@Validated @RequestBody teamDto: TeamDto): ResponseEntity<Team> {
-        return ResponseEntity.ok(
-            teamService.createTeam(teamDto)
-        )
+    fun createTeam(@Validated @RequestBody teamDto: TeamDto): Team {
+        return teamService.createTeam(teamDto)
     }
 
     @GetMapping("/{id}")
-    fun getTeam(@PathVariable id: Int): ResponseEntity<Team> {
-        return ResponseEntity.ok(
-            teamService.getTeam(id) ?: throw TeamNotFoundException(id)
-        )
+    fun getTeam(@PathVariable id: Int): Team {
+        return teamService.getTeam(id) ?: throw TeamNotFoundException(id)
     }
 
     @PutMapping("/{id}")
     fun updateTeam(
         @PathVariable id: Int,
         @Validated @RequestBody teamDto: TeamDto
-    ): ResponseEntity<Team> {
-        return ResponseEntity.ok(
-            teamService.updateTeam(id, teamDto) ?: throw TeamNotFoundException(id)
-        )
+    ): Team {
+        return teamService.updateTeam(id, teamDto) ?: throw TeamNotFoundException(id)
     }
 }
