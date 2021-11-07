@@ -21,5 +21,6 @@ data class PlayerDto(
     val goals: Int = 0,
     @field:NotNull(message = "The number of saves cannot be null")
     @field:Min(value = 0, message = "We are sure that your saves at least non-negative")
-    val saves: Int = 0
+    val saves: Int = 0,
+    val teamId: Int?
 )

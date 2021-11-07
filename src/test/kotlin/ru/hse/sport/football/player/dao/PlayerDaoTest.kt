@@ -21,7 +21,8 @@ class PlayerDaoTest {
         190,
         "Right",
         1,
-        123
+        123,
+        null
     )
 
     val forwardDto = PlayerDto(
@@ -31,7 +32,8 @@ class PlayerDaoTest {
         191,
         "Left",
         11,
-        0
+        0,
+        null
     )
 
     @Test
@@ -45,7 +47,8 @@ class PlayerDaoTest {
             goalkeeperDto.height,
             goalkeeperDto.leadingFoot,
             goalkeeperDto.goals,
-            goalkeeperDto.saves
+            goalkeeperDto.saves,
+            goalkeeperDto.teamId
         )
         assertEquals(expectedPlayer, player)
     }
@@ -98,7 +101,8 @@ class PlayerDaoTest {
             forwardDto.height,
             forwardDto.leadingFoot,
             forwardDto.goals,
-            forwardDto.saves
+            forwardDto.saves,
+            forwardDto.teamId
         )
 
         val updatedForward = playerDao.update(forward.id, updatedForwardDto)!!
@@ -109,6 +113,5 @@ class PlayerDaoTest {
     @Test
     fun `test update player with wrong id`() {
         assertNull(playerDao.update(-1, goalkeeperDto))
-        assertNull(playerDao.update(playerDao.getAll().size, goalkeeperDto))
     }
 }
