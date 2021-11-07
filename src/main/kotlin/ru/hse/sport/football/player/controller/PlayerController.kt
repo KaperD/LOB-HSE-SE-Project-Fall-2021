@@ -15,10 +15,8 @@ class PlayerController(
 ) {
 
     @PostMapping
-    fun addNewPlayer(@Validated @RequestBody playerDto: PlayerDto): ResponseEntity<Player> {
-        return ResponseEntity.ok(
-            playerService.createPlayer(playerDto)
-        )
+    fun addNewPlayer(@Validated @RequestBody playerDto: PlayerDto): Player {
+        return playerService.createPlayer(playerDto)
     }
 
     @GetMapping("/{id}")
