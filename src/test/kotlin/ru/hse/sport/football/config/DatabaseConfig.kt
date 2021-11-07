@@ -1,30 +1,31 @@
-package ru.hse.sport.config
+package ru.hse.sport.football.config
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import org.testcontainers.containers.PostgreSQLContainer
 import javax.sql.DataSource
 
+class MyPostgreSQLContainer(imageName: String) : PostgreSQLContainer<MyPostgreSQLContainer>(imageName)
+
 @Configuration
-@Profile("!test")
 class DatabaseConfig {
-    @Value("\${postgres.jdbcUrl}")
-    private lateinit var jdbcUrl: String
-    @Value("\${postgres.username}")
-    private lateinit var username: String
-    @Value("\${postgres.password}")
-    private lateinit var password: String
+    companion object {
+        val postgreSQLContainer = MyPostgreSQLContainer("postgres:13.4")
+            .withDatabaseName("postgres")
+            .withUsername("postgres")
+            .withPassword("postgres")
+            .apply { start() }
+    }
 
     @Bean
     fun dataSource(): DataSource {
         val config = HikariConfig()
-        config.jdbcUrl = jdbcUrl
-        config.username = username
-        config.password = password
+        config.jdbcUrl = postgreSQLContainer.jdbcUrl
+        config.username = postgreSQLContainer.username
+        config.password = postgreSQLContainer.password
         config.addDataSourceProperty("cachePrepStmts", "true")
         config.addDataSourceProperty("prepStmtCacheSize", "250")
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")

@@ -7,6 +7,5 @@ data class Team(
     val league: String,
     val homeStadium: String,
     val generalSponsor: String,
-    val coachName: String,
-    val playersIds: Set<Int>
+    val coachName: String
 )

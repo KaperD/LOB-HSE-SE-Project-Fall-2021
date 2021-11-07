@@ -31,6 +31,9 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.23")
     implementation("org.springframework:spring-jdbc:5.3.10")
     implementation("org.liquibase:liquibase-core:4.6.1")
+    testImplementation("org.testcontainers:testcontainers:1.16.2")
+    testImplementation("org.testcontainers:junit-jupiter:1.16.2")
+    testImplementation("org.testcontainers:postgresql:1.16.2")
 }
 
 tasks.withType<KotlinCompile> {

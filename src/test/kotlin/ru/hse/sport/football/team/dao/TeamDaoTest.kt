@@ -3,12 +3,11 @@ package ru.hse.sport.football.team.dao
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import ru.hse.sport.football.SpringTest
 import ru.hse.sport.football.team.model.Team
 import ru.hse.sport.football.team.model.TeamDto
 
-@SpringBootTest
-class TeamDaoTest {
+class TeamDaoTest : SpringTest {
     @Autowired
     lateinit var teamDao: TeamDao
 
@@ -18,8 +17,7 @@ class TeamDaoTest {
         "Premier",
         "Открытие банк Арена",
         "Лукойл",
-        "Rui Vitória",
-        setOf(1, 2, 3)
+        "Rui Vitória"
     )
 
     @Test
@@ -32,8 +30,7 @@ class TeamDaoTest {
             spartak.league,
             spartak.homeStadium,
             spartak.generalSponsor,
-            spartak.coachName,
-            spartak.playersIds
+            spartak.coachName
         )
         assertEquals(expectedTeam, team)
     }
@@ -51,15 +48,13 @@ class TeamDaoTest {
     @Test
     fun `test update team`() {
         val team = teamDao.save(spartak)
-        val newPlayersIds = setOf(111, 222, 333)
         val newTeamDto = TeamDto(
             "Spartak",
             "Russia",
             "Premier",
             "Открытие банк Арена",
             "Лукойл",
-            "Rui Vitória",
-            newPlayersIds
+            "Rui Vitória"
         )
         val updatedTeam = teamDao.update(team.id, newTeamDto)
         val expectedTeam = Team(
@@ -69,8 +64,7 @@ class TeamDaoTest {
             spartak.league,
             spartak.homeStadium,
             spartak.generalSponsor,
-            spartak.coachName,
-            newPlayersIds
+            spartak.coachName
         )
         assertEquals(expectedTeam, updatedTeam)
         assertEquals(expectedTeam, teamDao.get(team.id))

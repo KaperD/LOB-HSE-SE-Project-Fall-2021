@@ -3,13 +3,12 @@ package ru.hse.sport.football.player.dao
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import ru.hse.sport.football.SpringTest
 import ru.hse.sport.football.player.checkModelFitsDto
 import ru.hse.sport.football.player.model.Player
 import ru.hse.sport.football.player.model.PlayerDto
 
-@SpringBootTest
-class PlayerDaoTest {
+class PlayerDaoTest : SpringTest {
 
     @Autowired
     lateinit var playerDao: PlayerDao
