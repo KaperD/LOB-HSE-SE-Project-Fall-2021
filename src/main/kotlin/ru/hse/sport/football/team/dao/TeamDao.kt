@@ -1,55 +1,109 @@
 package ru.hse.sport.football.team.dao
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.jdbc.core.RowMapper
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
+import org.springframework.jdbc.core.namedparam.SqlParameterSource
+import org.springframework.jdbc.support.GeneratedKeyHolder
 import org.springframework.stereotype.Component
 import ru.hse.sport.football.team.model.Team
 import ru.hse.sport.football.team.model.TeamDto
-import java.util.concurrent.atomic.AtomicInteger
 
 @Component
 class TeamDao {
-    private val teams: MutableMap<Int, Team> = mutableMapOf()
-    private val currentId = AtomicInteger(1)
+    @Autowired
+    private lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
 
-    fun getNumberOfTeams() = teams.size
+    private val insertSql = "insert into team(name, country, league, homeStadium, generalSponsor, coachName) " +
+            "values (:name, :country, :league, :homeStadium, :generalSponsor, :coachName)"
+
+    private val selectSql = "select * from team where id = :id"
+
+    private val updateSql = "" +
+            "update team set " +
+            "name = :name, " +
+            "country = :country, " +
+            "league = :league, " +
+            "homeStadium = :homeStadium, " +
+            "generalSponsor = :generalSponsor, " +
+            "coachName = :coachName " +
+            "where id = :id"
+
+    private val rowMapper =
+        RowMapper<Team> { rs, _ ->
+            Team(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("country"),
+                rs.getString("league"),
+                rs.getString("homeStadium"),
+                rs.getString("generalSponsor"),
+                rs.getString("coachName")
+            )
+        }
+
+    fun getNumberOfTeams(): Int = namedParameterJdbcTemplate.queryForObject(
+        "select count(*) from team",
+        emptyMap<String, Any>(),
+        Int::class.java
+    )!!
 
     fun save(teamDto: TeamDto): Team {
-        val team = Team(
-            getUniqueId(),
+        val namedParameters: SqlParameterSource = toParameters(teamDto)
+        val keyHolder = GeneratedKeyHolder()
+        namedParameterJdbcTemplate.update(
+            insertSql,
+            namedParameters,
+            keyHolder,
+            arrayOf("id")
+        )
+        return Team(
+            keyHolder.key!!.toInt(),
             teamDto.name,
             teamDto.country,
             teamDto.league,
             teamDto.homeStadium,
             teamDto.generalSponsor,
-            teamDto.coachName,
-            teamDto.playersIds
+            teamDto.coachName
         )
-        teams[team.id] = team
-        return team
     }
 
     fun get(id: Int): Team? {
-        return teams[id]
+        return namedParameterJdbcTemplate.query(
+            selectSql,
+            MapSqlParameterSource().addValue("id", id),
+            rowMapper
+        ).firstOrNull { true }
     }
 
     fun update(id: Int, teamDto: TeamDto): Team? {
-        if (!teams.containsKey(id)) {
+        val namedParameters: SqlParameterSource = toParameters(teamDto).addValue("id", id)
+        val updated = namedParameterJdbcTemplate.update(
+            updateSql,
+            namedParameters
+        )
+        if (updated == 0) {
             return null
         }
-        val team = Team(
+        return Team(
             id,
             teamDto.name,
             teamDto.country,
             teamDto.league,
             teamDto.homeStadium,
             teamDto.generalSponsor,
-            teamDto.coachName,
-            teamDto.playersIds
+            teamDto.coachName
         )
-        teams[id] = team
-        return team
     }
 
-    private fun getUniqueId(): Int {
-        return currentId.getAndIncrement()
+    private fun toParameters(teamDto: TeamDto): MapSqlParameterSource {
+        return MapSqlParameterSource()
+            .addValue("name", teamDto.name)
+            .addValue("country", teamDto.country)
+            .addValue("league", teamDto.league)
+            .addValue("homeStadium", teamDto.homeStadium)
+            .addValue("generalSponsor", teamDto.generalSponsor)
+            .addValue("coachName", teamDto.coachName)
     }
 }

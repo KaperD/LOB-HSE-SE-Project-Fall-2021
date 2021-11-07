@@ -23,5 +23,4 @@ fun checkModelFitsDto(team: Team, teamDto: TeamDto) {
     Assertions.assertEquals(teamDto.homeStadium, team.homeStadium)
     Assertions.assertEquals(teamDto.generalSponsor, team.generalSponsor)
     Assertions.assertEquals(teamDto.coachName, team.coachName)
-    Assertions.assertEquals(teamDto.playersIds, team.playersIds)
 }

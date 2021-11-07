@@ -1,6 +1,5 @@
 package ru.hse.sport.football.player.controller
 
-import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import ru.hse.sport.football.player.exception.PlayerNotFoundException
