@@ -28,8 +28,10 @@ class TeamController(
     }
 
     @PutMapping("/{id}")
-    fun updateTeam(@PathVariable id: Int,
-                   @Validated @RequestBody teamDto: TeamDto): ResponseEntity<Team> {
+    fun updateTeam(
+        @PathVariable id: Int,
+        @Validated @RequestBody teamDto: TeamDto
+    ): ResponseEntity<Team> {
         return ResponseEntity.ok(
             teamService.updateTeam(id, teamDto) ?: throw TeamNotFoundException(id)
         )

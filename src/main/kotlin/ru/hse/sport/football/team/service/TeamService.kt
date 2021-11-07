@@ -3,8 +3,6 @@ package ru.hse.sport.football.team.service
 import org.springframework.stereotype.Service
 import ru.hse.sport.football.player.dao.PlayerDao
 import ru.hse.sport.football.player.exception.PlayerNotFoundException
-import ru.hse.sport.football.player.model.Player
-import ru.hse.sport.football.player.model.PlayerDto
 import ru.hse.sport.football.team.dao.TeamDao
 import ru.hse.sport.football.team.model.Team
 import ru.hse.sport.football.team.model.TeamDto
