@@ -15,7 +15,7 @@ class PlayerDao {
     @Autowired
     private lateinit var namedParameterJdbcTemplate: NamedParameterJdbcTemplate
 
-    private val insertSql = "insert into player(name, country, position, height, leadingfoot, goals, saves, teamid) " +
+    private val insertSql = "insert into player(name, country, position, height, leadingFoot, goals, saves, teamId) " +
             "values (:name, :country, :position, :height, :leadingFoot, :goals, :saves, :teamId)"
 
     private val selectSql = "select * from player where id = :id"
@@ -34,7 +34,7 @@ class PlayerDao {
             "where id = :id"
 
     private val rowMapper =
-        RowMapper<Player> { rs, rowNum ->
+        RowMapper<Player> { rs, _ ->
             Player(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -47,7 +47,6 @@ class PlayerDao {
                 rs.getObject("teamId") as? Int
             )
         }
-
 
     fun getNumberOfPlayers(): Int = namedParameterJdbcTemplate.queryForObject(
         "select count(*) from player",
@@ -94,7 +93,17 @@ class PlayerDao {
         if (updated == 0) {
             return null
         }
-        return getById(id)
+        return Player(
+            id,
+            playerDto.name,
+            playerDto.country,
+            playerDto.position,
+            playerDto.height,
+            playerDto.leadingFoot,
+            playerDto.goals,
+            playerDto.saves,
+            playerDto.teamId
+        )
     }
 
     fun getAll(): List<Player> {
