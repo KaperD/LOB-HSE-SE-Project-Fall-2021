@@ -26,6 +26,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation:2.5.6")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
+    implementation("com.zaxxer:HikariCP:5.0.0")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("org.postgresql:postgresql:42.2.23")
+    implementation("org.springframework:spring-jdbc:5.3.10")
+    implementation("org.liquibase:liquibase-core:4.6.1")
 }
 
 tasks.withType<KotlinCompile> {
