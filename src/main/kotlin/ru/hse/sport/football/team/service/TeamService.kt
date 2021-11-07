@@ -15,11 +15,7 @@ class TeamService(
     private val teamDao: TeamDao
 ) {
     fun createTeam(teamDto: TeamDto): Team {
-        teamDto.playersIds.stream().forEach {
-            if (playerDao.getById(it) == null) {
-                throw PlayerNotFoundException(it)
-            }
-        }
+        checkPlayersExistence(teamDto.playersIds)
         return teamDao.save(teamDto)
     }
 
@@ -28,6 +24,15 @@ class TeamService(
     }
 
     fun updateTeam(id: Int, updatedTeamDto: TeamDto): Team? {
+        checkPlayersExistence(updatedTeamDto.playersIds)
         return teamDao.update(id, updatedTeamDto)
+    }
+
+    private fun checkPlayersExistence(playerIds: Set<Int>) {
+        playerIds.stream().forEach {
+            if (playerDao.getById(it) == null) {
+                throw PlayerNotFoundException(it)
+            }
+        }
     }
 }
