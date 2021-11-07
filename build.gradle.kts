@@ -74,6 +74,7 @@ tasks.jacocoTestReport {
 tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
+            excludes = listOf("**/config/*")
             limit {
                 minimum = "0.9".toBigDecimal()
             }
