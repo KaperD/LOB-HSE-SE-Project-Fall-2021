@@ -8,5 +8,6 @@ data class Player(
     val height: Int,
     val leadingFoot: String,
     val goals: Int,
-    val saves: Int
+    val saves: Int,
+    val teamId: Int?
 )
