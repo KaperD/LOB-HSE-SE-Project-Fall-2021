@@ -11,6 +11,9 @@ NB: project is in Incubating status, it means that public API can be changed
 ## Roadmap
 You can find it in [GitHub Projects](https://github.com/KaperD/LOB-HSE-SE-Project-Fall-2021/projects/2)
 
+## Swagger
+You can find [here](https://kaperd.github.io/LOB-HSE-SE-Project-Fall-2021/)
+
 ## Running locally
 To run project you need an instance of PostgreSQL. 
 By default, it search it on localhost:5433 with 'postgres' as DB name, username and password.
