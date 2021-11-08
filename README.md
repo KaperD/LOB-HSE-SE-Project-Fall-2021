@@ -11,8 +11,12 @@ NB: project is in Incubating status, it means that public API can be changed
 ## Roadmap
 You can find it in [GitHub Projects](https://github.com/KaperD/LOB-HSE-SE-Project-Fall-2021/projects/2)
 
-## Running localy
-Project uses Gradle build system
+## Running locally
+To run project you need an instance of PostgreSQL. 
+By default, it search it on localhost:5433 with 'postgres' as DB name, username and password.
+You can change it in src/main/resources/application.properties 
+
+Project uses Gradle build system. You can use this command to run project:
 
 ```bash
 ./gradlew bootRun
@@ -21,6 +25,50 @@ Project uses Gradle build system
 It will start Tomcat server on port 8080. You can specify your own port in src/main/resources/application.properties:
 ```properties
 server.port = 7777
+```
+
+## Example
+### Posting player:
+```bash
+$ cat player.json
+{
+  "name": "Alex",
+  "country": "Canada",
+  "position": "Centre forward",
+  "height": 190,
+  "leadingFoot": "left",
+  "goals": 0,
+  "saves": 0,
+  "teamId": null
+}
+$ curl -s -X POST -H "Content-Type: application/json" -d "@player.json" localhost:8080/football/player | jq
+{
+  "id": 219,
+  "name": "Alex",
+  "country": "Canada",
+  "position": "Centre forward",
+  "height": 190,
+  "leadingFoot": "left",
+  "goals": 0,
+  "saves": 0,
+  "teamId": null
+}
+```
+
+### Getting player:
+```bash
+$ curl -s localhost:8080/football/player/219 | jq
+{
+  "id": 219,
+  "name": "Alex",
+  "country": "Canada",
+  "position": "Centre forward",
+  "height": 190,
+  "leadingFoot": "left",
+  "goals": 0,
+  "saves": 0,
+  "teamId": null
+}
 ```
 
 ## Authors
