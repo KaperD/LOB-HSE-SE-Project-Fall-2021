@@ -1,0 +1,262 @@
+swagger: "2.0"
+info:
+  description: "This is swagger for Sport+"
+  version: "1.0.0"
+  title: "Swagger Sport+"
+tags:
+  - name: "team"
+    description: "Everything about your football teams"
+  - name: "player"
+    description: "Everything about your football players"
+schemes:
+  - "https"
+paths:
+  /football/team:
+    post:
+      tags:
+        - "team"
+      summary: "Create a team"
+      description: ""
+      operationId: "createTeam"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "team"
+          description: "Team object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/TeamDto"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Team"
+  /football/team/{id}:
+    get:
+      tags:
+        - "team"
+      summary: "Get the team"
+      description: ""
+      operationId: "getTeam"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of team"
+          required: true
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Team"
+    put:
+      tags:
+        - "team"
+      summary: "Put the team"
+      description: ""
+      operationId: "putTeam"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of team"
+          required: true
+          type: "integer"
+        - name: "team"
+          in: "body"
+          description: "Team object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/TeamDto"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Team"
+  /football/player:
+    post:
+      tags:
+        - "player"
+      summary: "Create a player"
+      description: ""
+      operationId: "createPlayer"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "player"
+          description: "Player object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/PlayerDto"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Player"
+  /football/player/{id}:
+    get:
+      tags:
+        - "player"
+      summary: "Get the player"
+      description: ""
+      operationId: "getPlayer"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of player"
+          required: true
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Player"
+    put:
+      tags:
+        - "player"
+      summary: "Put the player"
+      description: ""
+      operationId: "putPlayer"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of player"
+          required: true
+          type: "integer"
+        - name: "player"
+          in: "body"
+          description: "Player object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/PlayerDto"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Player"
+  /football/player/all:
+    get:
+      tags:
+        - "player"
+      summary: "Get players"
+      description: ""
+      operationId: "getPlayers"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Player"
+definitions:
+  TeamDto:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      country:
+        type: "string"
+      league:
+        type: "string"
+      homeStadium:
+        type: "string"
+      generalSponsor:
+        type: "string"
+      coachName:
+        type: "string"
+  Team:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      country:
+        type: "string"
+      league:
+        type: "string"
+      homeStadium:
+        type: "string"
+      generalSponsor:
+        type: "string"
+      coachName:
+        type: "string"
+  PlayerDto:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      country:
+        type: "string"
+      position:
+        type: "string"
+      height:
+        type: "integer"
+      leadingFoot:
+        type: "string"
+      goals:
+        type: "integer"
+      saves:
+        type: "integer"
+      teamId:
+        type: "integer"
+  Player:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      country:
+        type: "string"
+      position:
+        type: "string"
+      height:
+        type: "integer"
+      leadingFoot:
+        type: "string"
+      goals:
+        type: "integer"
+      saves:
+        type: "integer"
+      teamId:
+        type: "integer"
