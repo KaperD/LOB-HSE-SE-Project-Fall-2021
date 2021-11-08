@@ -36,6 +36,13 @@ class TeamDaoTest : SpringTest {
     }
 
     @Test
+    fun `test get number of teams`() {
+        val before = teamDao.getNumberOfTeams()
+        teamDao.save(spartak)
+        assertEquals(before + 1, teamDao.getNumberOfTeams())
+    }
+
+    @Test
     fun `test get team`() {
         val team = teamDao.save(spartak)
         val gotTeam = teamDao.get(team.id)
