@@ -64,6 +64,13 @@ jacoco {
 }
 
 tasks.jacocoTestReport {
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude("**/config/**", "ru/hse/sport/SportPlusApplication*")
+            }
+        })
+    )
     reports {
         xml.required.set(false)
         csv.required.set(false)
@@ -72,9 +79,15 @@ tasks.jacocoTestReport {
 }
 
 tasks.jacocoTestCoverageVerification {
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude("**/config/**", "ru/hse/sport/SportPlusApplication*")
+            }
+        })
+    )
     violationRules {
         rule {
-            excludes = listOf("**/config/*")
             limit {
                 minimum = "0.9".toBigDecimal()
             }

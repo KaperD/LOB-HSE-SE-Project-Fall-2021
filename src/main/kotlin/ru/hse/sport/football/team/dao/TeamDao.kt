@@ -74,7 +74,7 @@ class TeamDao {
             selectSql,
             MapSqlParameterSource().addValue("id", id),
             rowMapper
-        ).firstOrNull { true }
+        ).firstOrNull()
     }
 
     fun update(id: Int, teamDto: TeamDto): Team? {
