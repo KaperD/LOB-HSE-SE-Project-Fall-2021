@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import javax.sql.DataSource
 
 @Configuration
-@Profile("!test")
 class DatabaseConfig {
     @Value("\${postgres.jdbcUrl}")
     private lateinit var jdbcUrl: String

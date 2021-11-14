@@ -31,7 +31,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.23")
     implementation("org.springframework:spring-jdbc:5.3.10")
     implementation("org.liquibase:liquibase-core:4.6.1")
-    testImplementation("io.zonky.test:embedded-postgres:1.3.1")
+    testImplementation("com.h2database:h2:1.4.200")
 }
 
 tasks.withType<KotlinCompile> {
