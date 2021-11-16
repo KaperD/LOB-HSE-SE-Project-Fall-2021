@@ -45,6 +45,14 @@ It will start Tomcat server on port 8080. You can specify your own port in src/m
 server.port = 7777
 ```
 
+## Building and testing locally with Docker
+You can build and test project with gradle:7.2-jdk11 image:
+
+```bash
+docker run -it --rm -v $PWD:$PWD -w $PWD gradle:7.2-jdk11 bash
+gradle test
+```
+
 ## Example
 ### Posting player:
 ```bash
