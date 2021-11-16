@@ -14,8 +14,23 @@ You can find it in [GitHub Projects](https://github.com/KaperD/LOB-HSE-SE-Projec
 ## Swagger
 You can find [here](https://kaperd.github.io/LOB-HSE-SE-Project-Fall-2021/)
 
-## Running locally
-To run project you need an instance of PostgreSQL. 
+## Running locally with Docker
+You can run project with Docker:
+
+```bash
+docker-compose up --detach
+```
+
+It will build and run project + start Postgres container
+
+To stop project and remove containers you can run:
+
+```bash
+docker-compose down
+```
+
+## Running locally without Docker
+To run project without Docker you need an instance of PostgreSQL. 
 By default, it search it on localhost:5433 with 'postgres' as DB name, username and password.
 You can change it in src/main/resources/application.properties 
 
