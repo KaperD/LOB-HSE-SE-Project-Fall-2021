@@ -21,7 +21,7 @@ You can run project with Docker:
 docker-compose up --detach
 ```
 
-It will build and run project + start Postgres container
+It will build and run project + start Postgres container. API will be available on port 8080
 
 To stop project and remove containers you can run:
 
