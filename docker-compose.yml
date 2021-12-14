@@ -8,11 +8,16 @@ services:
     depends_on:
       - dbpostgresql
     environment:
-      SPRING_APPLICATION_JSON: '{"postgres.jdbcUrl": "jdbc:postgresql://dbpostgresql:5432/postgres"}'
+      SPRING_APPLICATION_JSON: '{
+                                  "postgres.jdbcUrl": "jdbc:postgresql://dbpostgresql:5432/${PG_DATABASE}",
+                                  "postgres.username": "${PG_USER}",
+                                  "postgres.password": "${PG_PASSWORD}"
+                                }'
   dbpostgresql:
     image: postgres
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
+      - POSTGRES_DB=${PG_DATABASE}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
