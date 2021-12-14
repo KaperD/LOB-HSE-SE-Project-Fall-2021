@@ -19,9 +19,9 @@ You can start the project with Docker by first creating an `.env` file with the 
 
 |   Property  |  Description  |
 | :----: | :----: |
-| `PG_DATABASE`       | the name of the database you want to use       |
-| `PG_USER`     | the name of the desired database user        |
-| `PG_PASSWORD` | the password        |
+| `PG_DATABASE`       | the desired name of the database        |
+| `PG_USER`     | the desired name of the database user        |
+| `PG_PASSWORD` | the user password       |
 | `PG_PORT`     | the port to be mapped to the port of the database in the container        |
 
 An example is available in the file `.env.example`.
