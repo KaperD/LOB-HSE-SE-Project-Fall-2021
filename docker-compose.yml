@@ -16,7 +16,7 @@ services:
   dbpostgresql:
     image: postgres
     ports:
-      - "5432:${PG_PORT}"
+      - "${PG_PORT}:5432"
     environment:
       - POSTGRES_DB=${PG_DATABASE}
       - POSTGRES_USER=${PG_USER}
