@@ -9,7 +9,7 @@ services:
       - dbpostgresql
     environment:
       SPRING_APPLICATION_JSON: '{
-                                  "postgres.jdbcUrl": "jdbc:postgresql://dbpostgresql:${PG_PORT}/${PG_DATABASE}",
+                                  "postgres.jdbcUrl": "jdbc:postgresql://dbpostgresql:5432/${PG_DATABASE}",
                                   "postgres.username": "${PG_USER}",
                                   "postgres.password": "${PG_PASSWORD}"
                                 }'
