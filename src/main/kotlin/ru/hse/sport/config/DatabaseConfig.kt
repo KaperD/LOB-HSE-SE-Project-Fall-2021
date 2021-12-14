@@ -9,19 +9,16 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import javax.sql.DataSource
 
 @Configuration
-class DatabaseConfig {
-    private companion object {
-        const val DEFAULT_INITIALIZATION_FAIL_TIMEOUT: Long = 10000
-    }
+class DatabaseConfig(
     @Value("\${postgres.jdbcUrl}")
-    private lateinit var jdbcUrl: String
+    private val jdbcUrl: String,
     @Value("\${postgres.username}")
-    private lateinit var username: String
+    private val username: String,
     @Value("\${postgres.password}")
-    private lateinit var password: String
-    @Value("\${postgres.initialization.fail.timeout}")
-    private var initializationFailTimeout: Long = DEFAULT_INITIALIZATION_FAIL_TIMEOUT
-
+    private val password: String,
+    @Value("\${postgres.initialization.fail.timeout:10000}")
+    private val initializationFailTimeout: Long
+) {
     @Bean
     fun dataSource(): DataSource {
         val config = HikariConfig()
