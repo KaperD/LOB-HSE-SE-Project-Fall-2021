@@ -15,7 +15,18 @@ You can find it in [GitHub Projects](https://github.com/KaperD/LOB-HSE-SE-Projec
 You can find [here](https://kaperd.github.io/LOB-HSE-SE-Project-Fall-2021/)
 
 ## Running locally with Docker
-You can run project with Docker:
+You can start the project with Docker by first creating an `.env` file with the following properties:
+
+|   Property  |  Description  |
+| :----: | :----: |
+| `PG_DATABASE`       | the name of the database you want to use       |
+| `PG_USER`     | the name of the desired database user        |
+| `PG_PASSWORD` | the password        |
+| `PG_PORT`     | the port to be mapped to the port of the database in the container        |
+
+An example is available in the file `.env.example`.
+
+After creating the `.env` file, you can start the project in Docker with the following command:
 
 ```bash
 docker-compose up --detach
