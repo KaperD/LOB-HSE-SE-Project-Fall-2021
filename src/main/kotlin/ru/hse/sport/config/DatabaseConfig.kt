@@ -23,6 +23,7 @@ class DatabaseConfig {
         config.jdbcUrl = jdbcUrl
         config.username = username
         config.password = password
+        config.initializationFailTimeout = 10000
         config.addDataSourceProperty("cachePrepStmts", "true")
         config.addDataSourceProperty("prepStmtCacheSize", "250")
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
