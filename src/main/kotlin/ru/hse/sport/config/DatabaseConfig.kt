@@ -16,6 +16,8 @@ class DatabaseConfig {
     private lateinit var username: String
     @Value("\${postgres.password}")
     private lateinit var password: String
+    @Value("\${postgres.initialization.fail.timeout}")
+    private var initializationFailTimeout: Long = 10000
 
     @Bean
     fun dataSource(): DataSource {
@@ -23,7 +25,7 @@ class DatabaseConfig {
         config.jdbcUrl = jdbcUrl
         config.username = username
         config.password = password
-        config.initializationFailTimeout = 10000
+        config.initializationFailTimeout = initializationFailTimeout
         config.addDataSourceProperty("cachePrepStmts", "true")
         config.addDataSourceProperty("prepStmtCacheSize", "250")
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
