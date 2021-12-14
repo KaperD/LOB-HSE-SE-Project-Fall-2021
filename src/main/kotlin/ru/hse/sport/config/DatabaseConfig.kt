@@ -10,6 +10,9 @@ import javax.sql.DataSource
 
 @Configuration
 class DatabaseConfig {
+    private companion object {
+        const val DEFAULT_INITIALIZATION_FAIL_TIMEOUT: Long = 10000
+    }
     @Value("\${postgres.jdbcUrl}")
     private lateinit var jdbcUrl: String
     @Value("\${postgres.username}")
@@ -17,7 +20,7 @@ class DatabaseConfig {
     @Value("\${postgres.password}")
     private lateinit var password: String
     @Value("\${postgres.initialization.fail.timeout}")
-    private var initializationFailTimeout: Long = 10000
+    private var initializationFailTimeout: Long = DEFAULT_INITIALIZATION_FAIL_TIMEOUT
 
     @Bean
     fun dataSource(): DataSource {
