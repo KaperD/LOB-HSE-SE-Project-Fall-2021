@@ -1,9 +1,9 @@
 {
-  "name": "Danil",
-  "country": "Russia",
-  "position": "Goalkeeper",
-  "height": 190,
-  "leadingFoot": "right",
-  "goals": -4,
-  "saves": 123
+    "name": "Danil",
+    "country": "Russia",
+    "position": "Goalkeeper",
+    "height": 190,
+    "leadingFoot": "right",
+    "goals": -4,
+    "saves": 123
 }
