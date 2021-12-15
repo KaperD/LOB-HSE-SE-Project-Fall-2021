@@ -2,7 +2,6 @@ package ru.hse.sport.football.player.model
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 
 data class PlayerDto(
     @field:NotBlank(message = "Player name cannot be empty")
