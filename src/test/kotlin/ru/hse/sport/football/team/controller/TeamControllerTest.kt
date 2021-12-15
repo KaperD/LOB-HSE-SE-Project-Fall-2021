@@ -1,7 +1,8 @@
 package ru.hse.sport.football.team.controller
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -42,17 +43,17 @@ class TeamControllerTest : SpringTest {
 
         val zenit = postTeam(mapper.writeValueAsString(zenitDto), Team::class.java)
 
-        Assertions.assertEquals(HttpStatus.OK, zenit.statusCode)
+        assertEquals(HttpStatus.OK, zenit.statusCode)
         checkModelFitsDto(zenit.body!!, zenitDto)
 
         val psgDto = emptyPSGDto
 
         val psg = postTeam(mapper.writeValueAsString(psgDto), Team::class.java)
 
-        Assertions.assertEquals(HttpStatus.OK, psg.statusCode)
+        assertEquals(HttpStatus.OK, psg.statusCode)
         checkModelFitsDto(psg.body!!, psgDto)
 
-        Assertions.assertNotEquals(zenit.body!!.id, psg.body!!.id)
+        assertNotEquals(zenit.body!!.id, psg.body!!.id)
     }
 
     @Test
@@ -61,7 +62,7 @@ class TeamControllerTest : SpringTest {
 
         val zenitDto = emptyZenitDto.copy(name = "")
         val response = postTeam(mapper.writeValueAsString(zenitDto), String::class.java)
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
+        assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
     }
 
     @Test
@@ -74,22 +75,22 @@ class TeamControllerTest : SpringTest {
 
         val psgGetResponse = getTeam(psg.id, Team::class.java)
 
-        Assertions.assertEquals(HttpStatus.OK, psgGetResponse.statusCode)
-        Assertions.assertEquals(psg, psgGetResponse.body!!)
+        assertEquals(HttpStatus.OK, psgGetResponse.statusCode)
+        assertEquals(psg, psgGetResponse.body!!)
     }
 
     @Test
     fun `test getting team with wrong id`() {
         val mapper = jacksonObjectMapper()
 
-        Assertions.assertEquals(
+        assertEquals(
             HttpStatus.OK,
             postTeam(mapper.writeValueAsString(emptyZenitDto), Team::class.java).statusCode
         )
 
         val response = getTeam(-1, String::class.java)
 
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
     }
 
     @Test
@@ -105,16 +106,16 @@ class TeamControllerTest : SpringTest {
         val updatedZenitResponse = putTeam(zenit.id, mapper.writeValueAsString(updatedZenitDto), Team::class.java)
         val updatedZenit = getTeam(zenit.id, Team::class.java).body!!
 
-        Assertions.assertEquals(HttpStatus.OK, updatedZenitResponse.statusCode)
+        assertEquals(HttpStatus.OK, updatedZenitResponse.statusCode)
         checkModelFitsDto(updatedZenit, updatedZenitDto)
-        Assertions.assertNotEquals(zenit, updatedZenit)
+        assertNotEquals(zenit, updatedZenit)
     }
 
     @Test
     fun `test updating non-existing team`() {
         val mapper = jacksonObjectMapper()
 
-        Assertions.assertEquals(
+        assertEquals(
             HttpStatus.OK,
             postTeam(mapper.writeValueAsString(emptyPSGDto), Team::class.java).statusCode
         )
@@ -126,8 +127,8 @@ class TeamControllerTest : SpringTest {
         val updatedPSGResponse = putTeam(wrongId, mapper.writeValueAsString(updatedPSGDto), String::class.java)
         val getResponse = getTeam(wrongId, String::class.java)
 
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, updatedPSGResponse.statusCode)
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, getResponse.statusCode)
+        assertEquals(HttpStatus.NOT_FOUND, updatedPSGResponse.statusCode)
+        assertEquals(HttpStatus.NOT_FOUND, getResponse.statusCode)
     }
 
     fun getResource(path: String): String {
