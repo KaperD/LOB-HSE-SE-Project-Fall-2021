@@ -1,8 +1,8 @@
 {
-  "name": "Alex",
-  "country": "Canada",
-  "position": "Centre forward",
-  "height": 99999,
-  "leadingFoot": "left",
-  "goals": 0
+    "name": "Alex",
+    "country": "Canada",
+    "position": "Centre forward",
+    "height": 99999,
+    "leadingFoot": "left",
+    "goals": 0
 }
